@@ -1,0 +1,20 @@
+{% extends "stock/base.html" %}
+
+{% block content %}
+    <ul>
+        {% for company in companies %}
+
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">{{ company.name }}</h5>
+                <p class="card-text">{{ company.description }}</p>
+                <a href="{% url 'predict' company.slug %}" class="btn btn-primary">Предсказать стоимость!</a>
+              </div>
+              <div class="card-footer text-body-secondary">
+
+              </div>
+            </div>
+
+        {% endfor %}
+    </ul>
+{% endblock %}

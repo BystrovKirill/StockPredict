@@ -1,0 +1,40 @@
+{% extends "stock/base.html" %}
+
+{% block content %}
+<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+<div class="row justify-content-center mt-5">
+        <div class="col-md-7 text-center">
+
+            {% if user.is_authenticated %}
+
+            <h1>Добро пожаловать, {{ user.username }}!</h1>
+            <p>Хотите предсказать <b><i>стоимость</i></b> акции? Посетите список <u>доступных</u> компаний!</p>
+
+            <ul class="navbar-nav mr-auto">
+
+                </li>
+                <li class="nav-item {{ completed }}">
+                    <a role="button" class="btn btn-primary btn-lg" href="{% url 'companies' %}">Компании</a>
+                </li>
+
+            </ul>
+            {% endif %}
+
+            {% if not user.is_authenticated %}
+                <h1>Предсказать цену.</h1>
+                <p>Описание - But what matters is <u>what</u> you do. We created <b><i>ToDo</i></b> to help you make.</p>
+                <a role="button" class="btn btn-primary btn-lg" href="{% url 'signupuser' %}">Давайте начнем!</a>
+                <br>
+                <br>
+                <a role="button" class="btn btn-primary btn-lg" href="{% url 'about' %}">Узнать больше о проекте</a>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}
