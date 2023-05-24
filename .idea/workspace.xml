@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4bcaab9-edf6-4dcb-8384-6c75f605bf17" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock/templates/stock/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/stock/templates/stock/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock/templates/stock/predict.html" beforeDir="false" afterPath="$PROJECT_DIR$/stock/templates/stock/predict.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock/views.py" afterDir="false" />
     </list>
@@ -96,7 +96,7 @@
       <workItem from="1684507033299" duration="2444000" />
       <workItem from="1684827937071" duration="4927000" />
       <workItem from="1684846592320" duration="8004000" />
-      <workItem from="1684918872696" duration="6747000" />
+      <workItem from="1684918872696" duration="12911000" />
     </task>
     <servers />
   </component>

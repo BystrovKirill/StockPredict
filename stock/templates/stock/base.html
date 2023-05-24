@@ -30,14 +30,20 @@
             {% if user.is_authenticated %}
             <ul class="navbar-nav mr-auto">
 
-                <li class="nav-item {{ current }}">
-                    <a class="nav-link" href="{% url 'home' %}">Главная</a>
+                <li class="nav-item {{ main }}" style="width: 104px;">
+                    <div class="badge bg-light text-wrap" style="width: 6rem;">
+                        <a class="nav-link" href="{% url 'home' %}"><font size="4">Главная</font></a>
+                    </div>
                 </li>
-                <li class="nav-item {{ completed }}">
-                    <a class="nav-link" href="{% url 'companies' %}">Компании</a>
+                <li class="nav-item {{ companies }}" style="width: 120px;">
+                    <div class="badge bg-light text-wrap" style="width: 7rem;">
+                        <a class="nav-link" href="{% url 'companies' %}"><font size="4">Компании</font></a>
+                    </div>
                 </li>
-                <li class="nav-item {{ create }}">
-                    <a class="nav-link" href="{% url 'about' %}">О проекте</a>
+                <li class="nav-item {{ about }}">
+                    <div class="badge bg-light text-wrap" style="width: 8rem;">
+                        <a class="nav-link" href="{% url 'about' %}"><font size="4">О проекте</font></a>
+                    </div>
                 </li>
 
             </ul>
@@ -46,7 +52,8 @@
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a href="#" onclick="$('#signOutBtn').click()" class="nav-link">Выйти, <b>{{user.username}}</b></a>
+                    <a href="#" onclick="$('#signOutBtn').click()" class="nav-link">
+                        <font size="4">Выйти, <b>{{user.username}}</b></a></font>
                     <form style='display: none;' method="POST" action="{% url 'logoutuser' %}">
                         {% csrf_token %}
                         <button id="signOutBtn" type="submit">Выйти</button>
@@ -54,10 +61,10 @@
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'signupuser' %}">Регистрация</a>
+                    <a class="nav-link" href="{% url 'signupuser' %}"><font size="4">Регистрация</font></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'loginuser' %}">Войти</a>
+                    <a class="nav-link" href="{% url 'loginuser' %}"><font size="4">Войти</font></a>
                 </li>
                 {% endif %}
             </ul>

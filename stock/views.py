@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 
 from .models import Company
+from . import utils
 
 # Финансовые данные
 import yfinance as yf
@@ -23,6 +24,7 @@ import plotly.express as px
 from plotly.offline import plot
 from plotly.graph_objs import Scatter
 import datetime as dt
+
 
 def home(request):
     return render(request, 'stock/home.html')
@@ -83,6 +85,14 @@ def about(request):
 
 @login_required
 def predict(request, slug):
+    # получаем название компании по слагу
+    def get_key(d, value):
+        for k, v in d.items():
+            if v == value:
+                return k
+
+    name = get_key(utils.name_dict, slug)
+
     # Построение графика актуальных цен акций конекретной компании
     df = yf.download(tickers=slug, period='1d', interval='1m')
     fig = go.Figure()
@@ -92,8 +102,8 @@ def predict(request, slug):
                                  low=df['Low'],
                                  close=df['Close'], name='market data'))
     fig.update_layout(
-        title='{} live share price evolution'.format(slug),
-        yaxis_title='Stock Price (USD per Shares)')
+        title='Временная шкала',
+        yaxis_title='Стоимость акции (USD)')
     fig.update_xaxes(
         rangeslider_visible=True,
         rangeselector=dict(
@@ -145,6 +155,9 @@ def predict(request, slug):
     pred_df = pd.DataFrame(pred_dict)
     pred_fig = go.Figure([go.Scatter(x=pred_df['Date'], y=pred_df['Prediction'])])
     pred_fig.update_xaxes(rangeslider_visible=True)
+    pred_fig.update_layout(
+        title='Временная шкала',
+        yaxis_title='Стоимость акции (USD)')
     pred_fig.update_layout(paper_bgcolor="#14151b", plot_bgcolor="#14151b", font_color="white")
     plot_div_pred = plot(pred_fig, auto_open=False, output_type='div')
 
@@ -171,22 +184,23 @@ def predict(request, slug):
 
     # ========================================== Page Render section ==========================================
 
-    return render(request, 'stock/predict.html', context={'slug': slug,
-                                                   'plot_div': plot_div,
-                                                   'confidence': confidence,
-                                                   'forecast': forecast,
-                                                   'ticker_value': slug,
-                                                   'number_of_days': number_of_days,
-                                                   'plot_div_pred': plot_div_pred,
-                                                   'Symbol': Symbol,
-                                                   'Name': Name,
-                                                   'Last_Sale': Last_Sale,
-                                                   'Net_Change': Net_Change,
-                                                   'Percent_Change': Percent_Change,
-                                                   'Market_Cap': Market_Cap,
-                                                   'Country': Country,
-                                                   'IPO_Year': IPO_Year,
-                                                   'Volume': Volume,
-                                                   'Sector': Sector,
-                                                   'Industry': Industry,
-                                                   })
+    return render(request, 'stock/predict.html', context={'name': name,
+                                                          'slug': slug,
+                                                          'plot_div': plot_div,
+                                                          'confidence': confidence,
+                                                          'forecast': forecast,
+                                                          'ticker_value': slug,
+                                                          'number_of_days': number_of_days,
+                                                          'plot_div_pred': plot_div_pred,
+                                                          'Symbol': Symbol,
+                                                          'Name': Name,
+                                                          'Last_Sale': Last_Sale,
+                                                          'Net_Change': Net_Change,
+                                                          'Percent_Change': Percent_Change,
+                                                          'Market_Cap': Market_Cap,
+                                                          'Country': Country,
+                                                          'IPO_Year': IPO_Year,
+                                                          'Volume': Volume,
+                                                          'Sector': Sector,
+                                                          'Industry': Industry,
+                                                          })

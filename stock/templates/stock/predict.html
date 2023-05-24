@@ -1,30 +1,107 @@
 {% extends "stock/base.html" %}
 
+
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
         <div class="col-sm-12 col-xl-6">
-            <div class="bg-secondary text-center rounded p-4">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Recent Stock price of {{ticker_value}}</h6>
-                    <a href="https://finance.yahoo.com/quote/{{ticker_value}}/chart?p={{ticker_value}}#">
-                                    Show More
-                    </a>
-                </div>
+
                 {% block content %}
 
                 <div class="row justify-content-center mt-5">
                     <div class="col-md-7 text-center">
 
-                    <h1>{{ slug }} {{confidence}}</h1>
+                        <h1>{{ name }}</h1>
 
                     </div>
                 </div>
 
-                {% autoescape off %}
-                {{ plot_div }}
-                {% endautoescape %}
+                <br>
+
+                <div class="table-responsive">
+                    <table class="table text-start align-middle table-bordered table-hover mb-0">
+                        <tbody>
+                        <tr>
+                            <td>Код бумаги</td>
+                            <td>{{Symbol}}</td>
+                        </tr>
+                        <tr>
+                            <td>Название</td>
+                            <td>{{Name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Цена закрытия</td>
+                            <td>{{Last_Sale}}</td>
+                        </tr>
+                        <tr>
+                            <td>Чистое изменение</td>
+                            <td>{{Net_Change}}</td>
+                        </tr>
+                        <tr>
+                            <td>Изменение процента</td>
+                            <td>{{Percent_Change}}</td>
+                        </tr>
+                        <tr>
+                            <td>Капитализация, $</td>
+                            <td>{{Market_Cap}}</td>
+                        </tr>
+                        <tr>
+                            <td>Страна</td>
+                            <td>{{Country}}</td>
+                        </tr>
+                        <tr>
+                            <td>Год IPO</td>
+                            <td>{{IPO_Year}}</td>
+                        </tr>
+                        <tr>
+                            <td>Индикатор Объема</td>
+                            <td>{{Volume}}</td>
+                        </tr>
+                        <tr>
+                            <td>Сектор</td>
+                            <td>{{Sector}}</td>
+                        </tr>
+                        <tr>
+                            <td>Индустрия</td>
+                            <td>{{Industry}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <br>
+
+                <div class="bg-secondary text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Акиуальная стоимость котировок {{ticker_value}}</h6>
+                        <a style="color: #ffffff" href="https://finance.yahoo.com/quote/{{ticker_value}}/chart?p={{ticker_value}}#">
+                            Узнать больше!
+                        </a>
+                    </div>
+
+                    {% autoescape off %}
+                    {{ plot_div }}
+                    {% endautoescape %}
+
+                </div>
+
+                <br>
+
+                <div class="bg-secondary text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">Предсказанная стоимость котировок {{ticker_value}} на следующие
+                            {{number_of_days}} дней (Регрессионный анализ)</h6>
+                        <h6 class="mb-0">Оценка R2 - {{confidence|floatformat:5}}</h6>
+                    </div>
+
+                    {% autoescape off %}
+                    {{ plot_div_pred }}
+                    {% endautoescape %}
+
+                </div>
+
 
                 {% endblock %}
+
             </div>
         </div>
     </div>
