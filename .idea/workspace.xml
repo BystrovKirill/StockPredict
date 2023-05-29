@@ -6,9 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="d4bcaab9-edf6-4dcb-8384-6c75f605bf17" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StockPredict/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/StockPredict/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/StockPredict/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/StockPredict/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock/Data/Tickers.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock/templates/stock/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/stock/templates/stock/about.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock/templates/stock/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/stock/templates/stock/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock/templates/stock/companies.html" beforeDir="false" afterPath="$PROJECT_DIR$/stock/templates/stock/companies.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock/templates/stock/predict.html" beforeDir="false" afterPath="$PROJECT_DIR$/stock/templates/stock/predict.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stock/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -19,6 +27,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Python Script" />
       </list>
     </option>
@@ -37,12 +46,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "Project.color": "225855",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Bystr/Django_projects/yahoo_finance",
+    "last_opened_file_path": "H:/Download from browsers/lesson-23-coolsite",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -96,7 +106,14 @@
       <workItem from="1684507033299" duration="2444000" />
       <workItem from="1684827937071" duration="4927000" />
       <workItem from="1684846592320" duration="8004000" />
-      <workItem from="1684918872696" duration="12911000" />
+      <workItem from="1684918872696" duration="13563000" />
+      <workItem from="1684943996237" duration="91000" />
+      <workItem from="1685021014100" duration="393000" />
+      <workItem from="1685094936682" duration="1241000" />
+      <workItem from="1685102388492" duration="1067000" />
+      <workItem from="1685273728763" duration="1213000" />
+      <workItem from="1685275203267" duration="11974000" />
+      <workItem from="1685343751437" duration="23506000" />
     </task>
     <servers />
   </component>

@@ -1,18 +1,26 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.views.generic import FormView
 
-from .models import Company
+from .models import Company, Contact
 from . import utils
 
 # Финансовые данные
-import yfinance as yf
+import requests
+import apimoex
 
 # Обучение модели
+#from sklearn.preprocessing import MinMaxScaler
+#from keras.models import Sequential
+#from keras.layers import LSTM, Dense
 from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing, model_selection, svm
 import numpy as np
@@ -72,46 +80,62 @@ def logoutuser(request):
 @login_required
 def companies(request):
     companies = Company.objects.all()
-    return render(request, 'stock/companies.html', {'companies': companies})
+    paginator = Paginator(companies, 3)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'stock/companies.html', {'page_obj': page_obj, 'companies': companies})
 
 
 def about(request):
+    if request.method == 'POST':
+        contact = Contact()
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        contact.name = name
+        contact.email = email
+        contact.message = message
+        contact.save()
+        return redirect('home')
     return render(request, 'stock/about.html')
 
 
-# def predict(request, slug, number_of_days):
-#    return render(request, 'stock/predict.html', {'slug': slug, 'number_of_days': number_of_days})
+def search_companies(request):
+    if request.method == 'POST':
+        searched = request.POST['searched'].title()
+        stocks = Company.objects.filter(Q(name__icontains=searched)|Q(slug__icontains=searched))
+        return render(request, 'stock/searchcompanies.html', {'searched': searched, 'stocks': stocks})
+    else:
+        return render(request, 'stock/searchcompanies.html', {})
 
 
 @login_required
 def predict(request, slug):
     # получаем название компании по слагу
-    def get_key(d, value):
-        for k, v in d.items():
-            if v == value:
-                return k
+    name = utils.name_dict_ru_reverse[slug]
+    company = Company.objects.get(slug=slug)
 
-    name = get_key(utils.name_dict, slug)
+    # загрузка данных компании по ее слагу
+    with requests.Session() as session:
+        data = apimoex.get_board_history(session, slug)
+        df = pd.DataFrame(data)
+        df.set_index('TRADEDATE', inplace=True)
 
     # Построение графика актуальных цен акций конекретной компании
-    df = yf.download(tickers=slug, period='1d', interval='1m')
     fig = go.Figure()
-    fig.add_trace(go.Candlestick(x=df.index,
-                                 open=df['Open'],
-                                 high=df['High'],
-                                 low=df['Low'],
-                                 close=df['Close'], name='market data'))
+    fig = go.Figure([go.Scatter(x=df.index, y=df['CLOSE'])])
     fig.update_layout(
         title='Временная шкала',
-        yaxis_title='Стоимость акции (USD)')
+        yaxis_title='Стоимость акции (Руб.)')
     fig.update_xaxes(
         rangeslider_visible=True,
         rangeselector=dict(
             buttons=list([
-                dict(count=15, label="15m", step="minute", stepmode="backward"),
-                dict(count=45, label="45m", step="minute", stepmode="backward"),
-                dict(count=1, label="HTD", step="hour", stepmode="todate"),
-                dict(count=3, label="3h", step="hour", stepmode="backward"),
+                dict(count=45, label="day", step="day", stepmode="todate"),
+                dict(count=1, label="month", step="month", stepmode="backward"),
+                dict(count=3, label="year", step="year", stepmode="backward"),
                 dict(step="all")
             ])
         )
@@ -120,33 +144,34 @@ def predict(request, slug):
     plot_div = plot(fig, auto_open=False, output_type='div')
 
     # Обучение модели линейной регрессии
-    try:
-        df_ml = yf.download(tickers=slug, period='6mo', interval='1h')
-    except:
-        df_ml = yf.download(tickers='AAPL', period='6mo', interval='1h')
-
-    df_ml = df_ml[['Adj Close']]
-    number_of_days = 7
+    df = df[['CLOSE']]
+    number_of_days = 10
     forecast_out = number_of_days
-    df_ml['Prediction'] = df_ml[['Adj Close']].shift(-forecast_out)
-    # Splitting data for Test and Train
-    X = np.array(df_ml.drop(['Prediction'], axis=1))
+    df['Prediction'] = df[['CLOSE']].shift(-forecast_out)
+
+    # Разбиваем входные данные на обучающую и проверочную выборки
+    X = np.array(df.drop(['Prediction'], axis=1))
+    X = np.nan_to_num(X)
     X = preprocessing.scale(X)
     X_forecast = X[-forecast_out:]
     X = X[:-forecast_out]
-    y = np.array(df_ml['Prediction'])
+    y = np.array(df['Prediction'])
+    y = np.nan_to_num(y)
     y = y[:-forecast_out]
     X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.2)
+
     # Применяем Линейную регрессию
-    clf = LinearRegression()
-    clf.fit(X_train, y_train)
+    lin_regr = LinearRegression()
+    lin_regr.fit(X_train, y_train)
+
     # Предсказываем R2
-    confidence = clf.score(X_test, y_test)
+    confidence = lin_regr.score(X_test, y_test)
+
     # Предсказываем для 'н-ого' количества дней
-    forecast_prediction = clf.predict(X_forecast)
+    forecast_prediction = lin_regr.predict(X_forecast)
     forecast = forecast_prediction.tolist()
 
-    # Строим график для предсказанного значения
+    # Строим график для предсказанного значения линейной регрессии
     pred_dict = {"Date": [], "Prediction": []}
     for i in range(0, len(forecast)):
         pred_dict["Date"].append(dt.datetime.today() + dt.timedelta(days=i))
@@ -157,34 +182,13 @@ def predict(request, slug):
     pred_fig.update_xaxes(rangeslider_visible=True)
     pred_fig.update_layout(
         title='Временная шкала',
-        yaxis_title='Стоимость акции (USD)')
+        yaxis_title='Стоимость акции (Руб.)')
     pred_fig.update_layout(paper_bgcolor="#14151b", plot_bgcolor="#14151b", font_color="white")
     plot_div_pred = plot(pred_fig, auto_open=False, output_type='div')
 
-    # ========================================== Display Ticker Info ==========================================
-
-    ticker = pd.read_csv('stock/Data/Tickers.csv')
-    to_search = slug
-    ticker.columns = ['Symbol', 'Name', 'Last_Sale', 'Net_Change', 'Percent_Change', 'Market_Cap',
-                      'Country', 'IPO_Year', 'Volume', 'Sector', 'Industry']
-    for i in range(0, ticker.shape[0]):
-        if ticker.Symbol[i] == to_search:
-            Symbol = ticker.Symbol[i]
-            Name = ticker.Name[i]
-            Last_Sale = ticker.Last_Sale[i]
-            Net_Change = ticker.Net_Change[i]
-            Percent_Change = ticker.Percent_Change[i]
-            Market_Cap = ticker.Market_Cap[i]
-            Country = ticker.Country[i]
-            IPO_Year = ticker.IPO_Year[i]
-            Volume = ticker.Volume[i]
-            Sector = ticker.Sector[i]
-            Industry = ticker.Industry[i]
-            break
-
-    # ========================================== Page Render section ==========================================
-
+    # ========================================== Параметры для рендера страницы ========================================
     return render(request, 'stock/predict.html', context={'name': name,
+                                                          'company': company,
                                                           'slug': slug,
                                                           'plot_div': plot_div,
                                                           'confidence': confidence,
@@ -192,15 +196,4 @@ def predict(request, slug):
                                                           'ticker_value': slug,
                                                           'number_of_days': number_of_days,
                                                           'plot_div_pred': plot_div_pred,
-                                                          'Symbol': Symbol,
-                                                          'Name': Name,
-                                                          'Last_Sale': Last_Sale,
-                                                          'Net_Change': Net_Change,
-                                                          'Percent_Change': Percent_Change,
-                                                          'Market_Cap': Market_Cap,
-                                                          'Country': Country,
-                                                          'IPO_Year': IPO_Year,
-                                                          'Volume': Volume,
-                                                          'Sector': Sector,
-                                                          'Industry': Industry,
                                                           })

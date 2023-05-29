@@ -1,12 +1,25 @@
-name_dict = {
-    'Apple': 'AAPL',
-    'Tesla': 'TSLA',
-    'Amazon': 'AMZN',
-    'Nvidia': 'NVDA',
-    'Alphabet': 'GOOGL',
-    'Uber': 'UBER',
-    'Bank of America': 'BAC',
-    'Farfetch Limited': 'FTCH',
-    'Ford': 'F',
-    'Intel': 'INTC',
+name_dict_ru = {
+    'аэрофлот': 'AFLT',
+    'башнефть': 'BANEP',
+    'газпром': 'GAZP',
+    'детский мир': 'DSKY',
+    'магнит': 'MGNT',
+    'роснефть': 'ROSN',
+    'мтс': 'MTSS',
+    'м.видео': 'MVID',
+    'ростелеком': 'RTKM',
+    'сбербанк': 'SBER',
+}
+
+name_dict_ru_reverse = {
+    'AFLT': 'Аэрофлот',
+    'BANEP': 'Башнефть',
+    'GAZP': 'ГАЗПРОМ',
+    'DSKY': 'ДетскийМир',
+    'MGNT': 'Магнит',
+    'ROSN': 'Роснефть',
+    'MTSS': 'МТС',
+    'MVID': 'М.видео',
+    'RTKM': 'Ростелеком',
+    'SBER': 'Сбербанк',
 }

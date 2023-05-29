@@ -1,0 +1,32 @@
+{% extends "stock/base.html" %}
+
+{% block content %}
+
+    <br>
+    <center>
+        {% if searched %}
+            <h1>Результаты по слову "{{ searched }}":</h1>
+            <br>
+            {% for company in stocks %}
+                <div class="card text-center">
+                    <div class="card flex-row">
+                        {% if company.photo %}
+                        <img class="card-img-left example-card-img-responsive" src="{{ company.photo.url }}"
+                            width="300" height="300"/>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ company.name }}</h5>
+                            <p class="card-text">{{ company.description|linebreaks|truncatewords:50 }}</p>
+                            <a href="{% url 'predict' company.slug %}" class="btn btn-primary">Предсказать стоимость!</a>
+                        </div>
+                        <div class="card-footer text-body-secondary"></div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h1>Вы забыли ввести значение в поисковую строку!</h1>
+        {% endif %}
+
+    </center>
+
+{% endblock %}

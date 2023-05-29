@@ -11,7 +11,7 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="icon" type="image/png" href="{% static 'stock/logo.png' %}">
-    <title>ToDo</title>
+    <title>StockPredict</title>
 </head>
 <body>
 
@@ -47,13 +47,21 @@
                 </li>
 
             </ul>
+
+            <form class="d-flex" method=POST action="{% url 'search_companies' %}">
+                {% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="Поиск акций" aria-label="Поиск"
+                       name="searched">
+                <button class="btn btn btn-primary" type="submit">Поиск</button>
+            </form>
+
             {% endif %}
 
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a href="#" onclick="$('#signOutBtn').click()" class="nav-link">
-                        <font size="4">Выйти, <b>{{user.username}}</b></a></font>
+                        <font size="4">Выйти, <b>{{user.username}}</b></font></a>
                     <form style='display: none;' method="POST" action="{% url 'logoutuser' %}">
                         {% csrf_token %}
                         <button id="signOutBtn" type="submit">Выйти</button>
