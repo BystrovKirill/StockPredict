@@ -6,17 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d4bcaab9-edf6-4dcb-8384-6c75f605bf17" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StockPredict/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/StockPredict/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StockPredict/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/StockPredict/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock/Data/Tickers.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock/templates/stock/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/stock/templates/stock/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock/templates/stock/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/stock/templates/stock/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock/templates/stock/companies.html" beforeDir="false" afterPath="$PROJECT_DIR$/stock/templates/stock/companies.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock/templates/stock/predict.html" beforeDir="false" afterPath="$PROJECT_DIR$/stock/templates/stock/predict.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stock/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/stock/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/stock/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,21 +33,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Project.color": "225855",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "H:/Download from browsers/lesson-23-coolsite",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Project.color&quot;: &quot;225855&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;H:/Download from browsers/lesson-23-coolsite&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Bystr\Django_projects\StockPredict_project\stock\static\stock" />
@@ -113,7 +102,8 @@
       <workItem from="1685102388492" duration="1067000" />
       <workItem from="1685273728763" duration="1213000" />
       <workItem from="1685275203267" duration="11974000" />
-      <workItem from="1685343751437" duration="23506000" />
+      <workItem from="1685343751437" duration="23735000" />
+      <workItem from="1685435908423" duration="40000" />
     </task>
     <servers />
   </component>

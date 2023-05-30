@@ -102,6 +102,7 @@ def about(request):
     return render(request, 'stock/about.html')
 
 
+@login_required
 def search_companies(request):
     if request.method == 'POST':
         searched = request.POST['searched'].title()
